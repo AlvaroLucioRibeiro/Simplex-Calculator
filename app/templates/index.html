@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../static/global.css">
+    <link rel="stylesheet" href="../static/index.css">
+    <script src="https://kit.fontawesome.com/405d096056.js" crossorigin="anonymous"></script>
+    <title>Simplex Calculator</title>
+</head>
+<body>
+    <header>
+        <div>
+            <div id="logo-container" class="header-div-sub">
+                <h3>Inatel</h3>
+                <p>M210 - Otimização I</p>
+            </div>
+            <div id="title-container" class="header-div-sub">
+                <h1 id="title">Simplex Calculator</h1>
+            </div>
+            <div id="icon-container" class="header-div-sub">
+                <a href="https://github.com/Isaquehg/simplex-calculator">
+                    <i class="fa-brands fa-github"></i>GitHub
+                </a>
+            </div>
+        </div>
+    </header>
+    <main>
+        <div id="setup-container">
+            <h2>PPL Setup</h2>
+            <div id="form-container">
+                <form action="/ppl/create" method="post">
+                    <label for="num_variaveis">Número de Variáveis:</label>
+                    <input type="number" name="num_variaveis" required><br>
+            
+                    <label for="tipo_problema">Tipo de Problema:</label>
+                    <select name="tipo_problema" required>
+                        <option value="max">Maximizar</option>
+                        <option value="min">Minimizar</option>
+                    </select><br>
+            
+                    <label for="num_restricoes">Número de Restrições:</label>
+                    <input type="number" name="num_restricoes" required><br>
+            
+                    <input type="submit" value="Continuar">
+                </form>
+            </div>
+        </div>
+    </main>
+    <footer>
+        <div id="project-description-container">
+            <p>Simplex PPL Calculator</p>
+        </div>
+        <div id="contributors-container">
+            <p>Contributed by: </p>
+        </div>
+    </footer>
+</body>
+</html>
