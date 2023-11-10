@@ -1,3 +1,3 @@
-class Calculator():
+class Simplex():
     def __init__(self) -> None:
         pass
