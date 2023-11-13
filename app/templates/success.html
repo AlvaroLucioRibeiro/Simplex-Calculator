@@ -6,9 +6,16 @@
 {% block header_title %}Simplex Calculator{% endblock %}
 {% block content %}
     <h2>Resultado Final</h2>
-    {% for var in vars %}
-        <p>{{ var }}</p>
-    {% endfor %}
+    
+        <table>
+            {% for result in results %}
+                <tr>
+                    <td>{{ result.var }}</td>
+                    <td>{{ result.precos_sombra }}</td>
+                </tr>
+            {% endfor %}
+        </table>
+
 {% endblock %}
 {% block project_description %}Description for the home page{% endblock %}
 {% block contributors %}Contributed by: John Doe{% endblock %}

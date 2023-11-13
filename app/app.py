@@ -19,13 +19,26 @@ def ppl_setup():
 @app.route('/ppl/evaluate', methods=['POST'])
 def evaluate():
     # Realizar operações necessárias com os coeficientes recebidos do usuário
-    # Então retornar o template de resultado final do PPL
+    # Então retornar o template de resultado final do PPL, com ponto ótimo, lucro ótimo e o preço-sombra de cada restrição
     # OBS.: Criei uma lógica básica aqui, mas não sei se funciona, é para te dar um norte sobre o papel que esta rota deve fazer...
-    coefs = []
-    for coef in request['coeficientes']:
-        coefs.append(coef)
 
-    return redirect(url_for('result'), coefs=coefs)
+    # Envelopamento do resultado de cada var e do preco-sombra de cada var
+    results = {}
+
+    # Valores Ótimos
+    vars = []
+    for var in request['variaveis']:
+        vars.append(var)
+
+    # Preços sombra p/ cada var
+    precos_sombra = []
+    for ps in request['precos_sombra']:
+        precos_sombra.append(ps)
+
+    results['vars'] = vars
+    results['precos_sombra'] = precos_sombra
+
+    return redirect(url_for('result'), results=results)
 
 if __name__ == '__main__':
     app.run(debug=True)
