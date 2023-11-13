@@ -23,6 +23,12 @@
                     <label for="lado_direito{{ j }}">Lado Direito da Restrição {{ j+1 }}:</label>
                     <input type="number" name="lado_direito{{ j }}" step="any" required><br>
                 {% endfor %}
+
+                <label for="tipo_problema">Tipo de Problema:</label>
+                <select name="tipo_problema" required>
+                    <option value="max">Maximizar</option>
+                    <option value="min">Minimizar</option>
+                </select><br>
         
                 <input type="submit" value="Calcular">
             </form>

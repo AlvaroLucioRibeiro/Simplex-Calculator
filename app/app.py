@@ -6,12 +6,14 @@ app = Flask(__name__)
 def ppl_setup():
     # Ao clicar em continuar, depois da config. inicial do PPL
     if request.method == 'POST':
+        #print(request.form)
+        #ImmutableMultiDict([('num_variaveis', '2'), ('tipo_problema', 'max'), ('num_restricoes', '5')])
+
         num_variaveis = int(request.form['num_variaveis'])
-        tipo_problema = request.form['tipo_problema']
         num_restricoes = int(request.form['num_restricoes'])
 
         # Redireciona para outra rota
-        return render_template('modelo-ppl.html', num_variaveis=num_variaveis, tipo_problema=tipo_problema, num_restricoes=num_restricoes)
+        return render_template('modelo-ppl.html', num_variaveis=num_variaveis, num_restricoes=num_restricoes)
 
     return render_template('index.html')
 
@@ -33,6 +35,7 @@ def evaluate():
     print(data)
 
     # Initialize lists to store coefficients
+    tipo_problema = data['tipo_problema']
     coefs_func_objetivo = []
     coefs_restricao = []
     lados_direitos = []
@@ -76,14 +79,14 @@ def evaluate():
     # Calcular o resultado
 
 
-    # Envelopamento do resultado de cada var e do preco-sombra de cada var
-    results = {}
-
     # Valores Ótimos
     vars = []
 
     # Preços sombra p/ cada var
     precos_sombra = []
+
+    # Envelopamento do resultado de cada var e do preco-sombra de cada var
+    results = {}
 
     results['vars'] = vars
     results['precos_sombra'] = precos_sombra
