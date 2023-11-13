@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../static/global.css">
+    <title>{% block title %}Resultado Final{% endblock %}</title>
+</head>
+<body>
+    <header>
+        <div>
+            <div id="logo-container" class="header-div-sub">
+                <h3>Inatel</h3>
+                <p>M210 - Otimização I</p>
+            </div>
+            <div id="title-container" class="header-div-sub">
+                <h1 id="title">{% block header_title %}Simplex Calculator{% endblock %}</h1>
+            </div>
+            <div id="icon-container" class="header-div-sub">
+                <a href="https://github.com/Isaquehg/simplex-calculator">
+                    <i class="fa fa-github"></i> GitHub
+                </a>
+            </div>
+        </div>
+    </header>
+
+    <div id="content">
+        {% block content %}{% endblock %}
+    </div>
+
+    <footer>
+        <div id="project-description-container">
+            <p>{% block project_description %}Simplex PPL Calculator{% endblock %}</p>
+        </div>
+        <div id="contributors-container">
+            <p>{% block contributors %}Contributed by: {% endblock %}</p>
+        </div>
+    </footer>
+</body>
+</html>

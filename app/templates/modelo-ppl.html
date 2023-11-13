@@ -1,29 +1,10 @@
-<!DOCTYPE html>
-<html lang="pt">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="../static/global.css">
-    <link rel="stylesheet" href="../static/index.css">
-    <script src="https://kit.fontawesome.com/405d096056.js" crossorigin="anonymous"></script>    <title>Simplex Calculator</title>
-</head>
-<body>
-    <header>
-        <div>
-            <div id="logo-container" class="header-div-sub">
-                <h3>Inatel</h3>
-                <p>M210 - Otimização I</p>
-            </div>
-            <div id="title-container" class="header-div-sub">
-                <h1 id="title">Simplex Calculator</h1>
-            </div>
-            <div id="icon-container" class="header-div-sub">
-                <a href="https://github.com/Isaquehg/simplex-calculator">
-                    <i className="fa fa-github"></i> GitHub
-                </a>
-            </div>
-        </div>
-    </header>
+<!-- coefs.html -->
+
+{% extends "base.html" %}
+
+{% block title %}Simplex Calculator{% endblock %}
+{% block header_title %}Simplex Calculator{% endblock %}
+{% block content %}
     <main>
         <div>
             <h2>Coeficients</h2>
@@ -47,13 +28,8 @@
             </form>
         </div>
     </main>
-    <footer>
-        <div id="project-description-container">
-            <p>Simplex PPL Calculator</p>
-        </div>
-        <div id="contributors-container">
-            <p>Contributed by: </p>
-        </div>
-    </footer>
-</body>
-</html>
+{% endblock %}
+{% block project_description %}Simplex PPL Calculator{% endblock %}
+{% block contributors %}Contributed by: John Doe{% endblock %}
+
+<link rel="stylesheet" href="../static/modelo-ppl.css">
