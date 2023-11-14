@@ -86,6 +86,7 @@ def evaluate():
     # Preços sombra p/ cada var
     precos_sombra = []
 
+
     # Envelopamento do resultado de cada var e do preco-sombra de cada var
     results = {}
 
