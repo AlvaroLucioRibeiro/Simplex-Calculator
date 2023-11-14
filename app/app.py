@@ -2,6 +2,7 @@ from flask import Flask, render_template, request, redirect, url_for
 
 app = Flask(__name__)
 
+@app.route('/', methods=['GET'])
 @app.route('/ppl/setup', methods=['GET', 'POST'])
 def ppl_setup():
     # Ao clicar em continuar, depois da config. inicial do PPL
@@ -45,7 +46,7 @@ def evaluate():
         # Obter coeficientes da Função Objetivo
         if key.startswith('coef_objetivo'):
             coefs_func_objetivo.append(float(value))
-        
+
         # Obter coeficientes de cada restrição
         elif key.startswith('coef_restricao'):
             # Extract the indices from the key
