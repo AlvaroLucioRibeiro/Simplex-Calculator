@@ -4,33 +4,29 @@
 {% block header_title %}Simplex Calculator{% endblock %}
 {% block content %}
     <main>
-        <div>
-            <h2>Coeficients</h2>
-            <form action="evaluate" method="post">
+        <div id="calculate-container">
+            <h2 id="title-calculate">Insira os Coeficientes do PPL</h2>
+            <form id="form-calculate" action="evaluate" method="post">
                 {% for i in range(num_variaveis) %}
-                    <label for="coef_objetivo{{ i }}">Coeficiente da Função Objetivo (C{{ i+1 }}):</label>
-                    <input type="number" name="coef_objetivo{{ i }}" step="any" required><br>
+                    <input class="input-calculate" type="number" name="coef_objetivo{{ i }}" placeholder="Coeficiente da Função Objetivo (C{{ i+1 }})" step="any" required><br>
                 {% endfor %}
-                <label for="lado_direito">Lado Direito da Função Objetivo:</label>
-                <input type="number" name="lado_direito" step="any" required><br>
+                <input class="input-calculate" type="number" name="lado_direito_fo" placeholder="Lado Direito da Função Objetivo" step="any" required><br>
         
                 {% for j in range(num_restricoes) %}
-                    <p>Restrição {{ j+1 }}:</p>
+                    <h3 class="title-restricao-calculate">Restrição {{ j+1 }}:</h3>
+                    <br>
                     {% for i in range(num_variaveis) %}
-                        <label for="coef_restricao{{ j }}{{ i }}">Coeficiente A{{ j+1 }}{{ i+1 }}:</label>
-                        <input type="number" name="coef_restricao{{ j }}{{ i }}" step="any" required><br>
+                        <input class="input-calculate" type="number"  placeholder="Coeficiente A{{ j+1 }}{{ i+1 }}" name="coef_restricao{{ j }}{{ i }}" step="any" required><br>
                     {% endfor %}
-                    <label for="lado_direito{{ j }}">Lado Direito da Restrição {{ j+1 }}:</label>
-                    <input type="number" name="lado_direito{{ j }}" step="any" required><br>
+                    <input class="input-calculate" type="number" name="lado_direito_{{ j }}" placeholder="Lado Direito da Restrição {{ j+1 }}" step="any" required><br>
                 {% endfor %}
-
-                <label for="tipo_problema">Tipo de Problema:</label>
+                <br>
                 <select name="tipo_problema" required>
                     <option value="max">Maximizar</option>
                     <option value="min">Minimizar</option>
                 </select><br>
         
-                <input type="submit" value="Calcular">
+                <input class="input-calculate" type="submit" value="Calcular PPL">
             </form>
         </div>
     </main>

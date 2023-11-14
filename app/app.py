@@ -10,6 +10,8 @@ def ppl_setup():
         #print(request.form)
         #ImmutableMultiDict([('num_variaveis', '2'), ('tipo_problema', 'max'), ('num_restricoes', '5')])
 
+        global num_variaveis
+        global num_restricoes
         num_variaveis = int(request.form['num_variaveis'])
         num_restricoes = int(request.form['num_restricoes'])
 
@@ -27,11 +29,15 @@ def evaluate():
     #print(f'keys: {len(request.form.keys())}')
     #print(f'form: {request.form}')
     '''
-    ([('coef_objetivo0', '8'), ('coef_objetivo1', '9'), ('coef_restricao00', '10'), ('coef_restricao01', '11'), ('lado_direito0', '12'), ('coef_restricao10', '13'), ('coef_restricao11', '14'), ('lado_direito1', '15'), ('coef_restricao20', '16'), ('coef_restricao21', '17'), ('lado_direito2', '18'), ('coef_restricao30', '19'), ('coef_restricao31', '20'), ('lado_direito3', '21'), ('coef_restricao40', '22'), ('coef_restricao41', '23'), ('lado_direito4', '24')])
-
-
-    ([('coef_objetivo0', '30'), ('coef_objetivo1', '64'), ('lado_direito_fo', '550'), ('coef_restricao00', '10'), ('coef_restricao01', '11'), ('lado_direito0', '15'), ('coef_restricao10', '21'), ('coef_restricao11', '32'), ('lado_direito1', '44')])
+    {'coef_objetivo0': '200', 'coef_objetivo1': '300', 'lado_direito_fo': '4000', 'coef_restricao00': '50', 'coef_restricao01': '60', 'lado_direito_0': '70', 'coef_restricao10': '80', 'coef_restricao11': '90', 'lado_direito_1': '100', 'coef_restricao20': '110', 'coef_restricao21': '120', 'lado_direito_2': '130', 'tipo_problema': 'max'}
+    Tipo Problema: max
+    Num. Variáveis: 2
+    Num. Restrições: 3
+    Coefs Objetivo: [200.0, 300.0]
+    Coefs Restrições: [50.0, 60.0, 80.0, 90.0, 110.0, 120.0]
+    Lados Direitos: [4000.0, 70.0, 100.0, 130.0]
     '''
+
     data = dict(request.form)
     print(data)
 
@@ -41,53 +47,22 @@ def evaluate():
     coefs_restricao = []
     lados_direitos = []
 
-    # Extrair tamanho do request
+    # Extrair componentes do request
     for key, value in data.items():
-        # Obter coeficientes da Função Objetivo
         if key.startswith('coef_objetivo'):
             coefs_func_objetivo.append(float(value))
-        
-        # Obter coeficientes de cada restrição
         elif key.startswith('coef_restricao'):
-            # Extract the indices from the key
-            indices = key.split('_')
-            if len(indices) == 3:
-                _, restricao_index, coef_index = indices
-                try:
-                    restricao_index = int(restricao_index)
-                    coef_index = int(coef_index)
-                except ValueError:
-                    print(f"Error converting indices to integers. Key: {key}, Indices: {indices}")
-                    continue
-
-                # Make sure the lists are long enough
-                while len(coefs_restricao) <= restricao_index:
-                    coefs_restricao.append([])
-                    lados_direitos.append([])
-
-                # Append the coefficient to the appropriate list
-                coefs_restricao[restricao_index].append(float(value))
-
-        # Obter lado direito de cada restrição
+            coefs_restricao.append(float(value))
         elif key.startswith('lado_direito'):
-            # Extract the index from the key
-            indices = key.split('_')
-            if len(indices) == 2:
-                _, restricao_index = indices
-                try:
-                    restricao_index = int(restricao_index)
-                except ValueError:
-                    print(f"Error converting index to an integer. Key: {key}, Indices: {indices}")
-                    continue
-
-                # Make sure the lists are long enough
-                while len(lados_direitos) <= restricao_index:
-                    coefs_restricao.append([])
-                    lados_direitos.append([])
-
-                # Append the right-hand side value to the appropriate list
-                lados_direitos[restricao_index].append(float(value))
-
+            lados_direitos.append(float(value))
+    
+    
+    print(f'Tipo Problema: {tipo_problema}')
+    print(f'Num. Variáveis: {num_variaveis}')
+    print(f'Num. Restrições: {num_restricoes}')
+    print(f'Coefs Objetivo: {coefs_func_objetivo}')
+    print(f'Coefs Restrições: {coefs_restricao}')
+    print(f'Lados Direitos: {lados_direitos}') # Primeiro elemento é o lado direito da F.O.
 
     # Calcular o resultado
 

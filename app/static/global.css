@@ -2,13 +2,13 @@ body {
     font-family: Arial, sans-serif;
     justify-content: center;
     align-items: center;
-    background: linear-gradient(to bottom, #000000, rgb(24, 57, 245));
+    background: rgb(255, 255, 255);
     margin: 0;
     color: white;
 }
 
 header{
-    height: 17vh;
+    height: 12vh;
     background-color: #000000;
     display: flex;
     flex-wrap: nowrap;
@@ -62,12 +62,11 @@ main{
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    min-height: 70vh;
+    min-height: 77vh;
 }
 
 footer{
     background-color: #000000;
-    min-height: 15vh;
     align-items: center;
     padding-top: 1%;
 }
@@ -76,4 +75,125 @@ footer div{
     align-items: center;
     justify-content: center;
     display: flex;
+}
+
+#title-setup{
+    text-align: center;
+}
+
+#setup-container{
+    padding-top: 5%;
+    padding-right: 3%;
+    padding-left: 3%;
+    padding-bottom: 5%;
+    border-color: none;
+    border-radius: 8px;
+    border-style: none;
+    border-width: 1px;
+    box-shadow: 8px 8px 7px rgba(0, 0, 0, 0.678);
+    min-width: 23%;
+    min-height: 17em;
+    background: linear-gradient(to bottom, #000000, rgb(0, 0, 0));
+}
+
+#form-setup{
+    min-width: 100%;
+}
+
+.input-setup{
+    border-radius: 8px;
+    border-style: none;
+    font-size: 130%;
+    min-width: 100%;
+    padding: 2%;
+    margin-top: 4%;
+}
+.input-setup[type='submit']:hover{
+    cursor: pointer;
+    background-color: rgb(211, 211, 211);
+}
+.input-setup:hover{
+    background-color: rgb(211, 211, 211);
+}
+
+#calculate-container{
+    margin-top: 1.5%;
+    margin-bottom: 2%;
+    padding-top: 5%;
+    padding-right: 3%;
+    padding-left: 3%;
+    padding-bottom: 5%;
+    border-color: none;
+    border-radius: 8px;
+    border-style: none;
+
+    min-width: 50%;
+    min-height: 17em;
+    background: linear-gradient(to bottom, #000000, rgb(0, 0, 0));
+}
+
+#title-calculate{
+    text-align: center;
+    font-size: 190%;
+}
+
+.title-restricao-calculate{
+    padding-top: 1%;
+}
+
+#form-calculate{
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: column;
+}
+
+.input-calculate{
+    border-radius: 8px;
+    border-style: none;
+    font-size: 110%;
+    min-width: 85%;
+    padding: 1%;
+    margin-top: 2%;
+}
+
+.input-calculate[type="submit"]:hover{
+    cursor: pointer;
+    background-color: rgb(211, 211, 211);
+}
+.input-calculate:hover{
+    background-color: rgb(211, 211, 211);
+}
+
+select{
+    font-size: 130%;
+    border-radius: 8px;
+    padding: 2%;
+    margin-top: 2%;
+}
+
+
+#container-result{
+    margin-top: 1.5%;
+    margin-bottom: 2%;
+    padding-top: 5%;
+    padding-right: 3%;
+    padding-left: 3%;
+    padding-bottom: 5%;
+    border-color: none;
+    border-radius: 8px;
+    border-style: none;
+
+    min-width: 50%;
+    min-height: 17em;
+    background: linear-gradient(to bottom, #000000, rgb(0, 0, 0));
+}
+
+#title-result{
+
+}
+#table-result{
+
+}
+#result-lucro{
+
 }

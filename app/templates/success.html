@@ -3,22 +3,24 @@
 {% block title %}Resultado Final{% endblock %}
 {% block header_title %}Simplex Calculator{% endblock %}
 {% block content %}
-    <h2>Resultado Final</h2>
-    
-        <table>
-            <tr>
-                <th>Valor Ótimo Variáveis</th>
-                <th>Preço-Sombra</th>
-            </tr>
-            {% for result in results %}
+    <main>
+        <div id="container-result">
+            <h2 id="title-result">Resultado Final</h2>
+            <table id="table-result">
                 <tr>
-                    <td>{{ result.var }}</td>
-                    <td>{{ result.precos_sombra }}</td>
-                    <td>{{ result.lucro }}</td>
+                    <th>Valor Ótimo Variáveis</th>
+                    <th>Preço-Sombra</th>
                 </tr>
-            {% endfor %}
-        </table>
-
+                {% for result in results %}
+                    <tr>
+                        <td>{{ result.var }}</td>
+                        <td>{{ result.precos_sombra }}</td>
+                    </tr>
+                {% endfor %}
+            </table>
+            <h3 id="result-lucro">Lucro Ótimo: {{ results.lucro }}</h3>
+        </div>
+    </main>
 {% endblock %}
 {% block project_description %}Description for the home page{% endblock %}
 {% block contributors %}Contributed by: John Doe{% endblock %}

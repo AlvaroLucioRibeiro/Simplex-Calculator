@@ -7,22 +7,14 @@
 {% block content %}
     <main>
         <div id="setup-container">
-            <h2>PPL Setup</h2>
-            <div id="form-container">
-                <form action="/ppl/setup" method="post">
-                    <label for="num_variaveis">Número de Variáveis:</label>
-                    <input type="number" name="num_variaveis" required><br>
-            
-                    <label for="num_restricoes">Número de Restrições:</label>
-                    <input type="number" name="num_restricoes" required><br>
-            
-                    <input type="submit" value="Continuar">
-                </form>
-            </div>
+            <h2 id="title-setup">Pré-Configuração do PPL</h2>
+            <form id="form-setup" action="/ppl/setup" method="post">
+                <input class="input-setup" type="number" name="num_variaveis" placeholder="Número de Variáveis" required><br>
+                <input class="input-setup" type="number" name="num_restricoes" placeholder="Número de Restrições" required><br>
+                <input class="input-setup" type="submit" value="Continuar">
+            </form>
         </div>
     </main>
 {% endblock %}
 {% block project_description %}Simplex PPL Calculator{% endblock %}
 {% block contributors %}Contributed by: John Doe{% endblock %}
-
-<link rel="stylesheet" href="../static/index.css">
