@@ -11,8 +11,8 @@
                     <label for="coef_objetivo{{ i }}">Coeficiente da Função Objetivo (C{{ i+1 }}):</label>
                     <input type="number" name="coef_objetivo{{ i }}" step="any" required><br>
                 {% endfor %}
-                <label for="coef_objetivo{{ i }}">Lado Direito da Função Objetivo:</label>
-                <input type="number" name="lado_direito_fo" step="any" required><br>
+                <label for="lado_direito">Lado Direito da Função Objetivo:</label>
+                <input type="number" name="lado_direito" step="any" required><br>
         
                 {% for j in range(num_restricoes) %}
                     <p>Restrição {{ j+1 }}:</p>

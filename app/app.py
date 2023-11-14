@@ -42,39 +42,51 @@ def evaluate():
     lados_direitos = []
 
     # Extrair tamanho do request
-    for key, value in data:
+    for key, value in data.items():
         # Obter coeficientes da Função Objetivo
         if key.startswith('coef_objetivo'):
             coefs_func_objetivo.append(float(value))
-
+        
         # Obter coeficientes de cada restrição
         elif key.startswith('coef_restricao'):
             # Extract the indices from the key
-            _, restricao_index, coef_index = key.split('_')
-            restricao_index = int(restricao_index)
-            coef_index = int(coef_index)
+            indices = key.split('_')
+            if len(indices) == 3:
+                _, restricao_index, coef_index = indices
+                try:
+                    restricao_index = int(restricao_index)
+                    coef_index = int(coef_index)
+                except ValueError:
+                    print(f"Error converting indices to integers. Key: {key}, Indices: {indices}")
+                    continue
 
-            # Make sure the lists are long enough
-            while len(coefs_restricao) <= restricao_index:
-                coefs_restricao.append([])
-                lados_direitos.append([])
+                # Make sure the lists are long enough
+                while len(coefs_restricao) <= restricao_index:
+                    coefs_restricao.append([])
+                    lados_direitos.append([])
 
-            # Append the coefficient to the appropriate list
-            coefs_restricao[restricao_index].append(float(value))
+                # Append the coefficient to the appropriate list
+                coefs_restricao[restricao_index].append(float(value))
 
         # Obter lado direito de cada restrição
         elif key.startswith('lado_direito'):
             # Extract the index from the key
-            _, restricao_index = key.split('_')
-            restricao_index = int(restricao_index)
+            indices = key.split('_')
+            if len(indices) == 2:
+                _, restricao_index = indices
+                try:
+                    restricao_index = int(restricao_index)
+                except ValueError:
+                    print(f"Error converting index to an integer. Key: {key}, Indices: {indices}")
+                    continue
 
-            # Make sure the lists are long enough
-            while len(lados_direitos) <= restricao_index:
-                coefs_restricao.append([])
-                lados_direitos.append([])
+                # Make sure the lists are long enough
+                while len(lados_direitos) <= restricao_index:
+                    coefs_restricao.append([])
+                    lados_direitos.append([])
 
-            # Append the right-hand side value to the appropriate list
-            lados_direitos[restricao_index].append(float(value))
+                # Append the right-hand side value to the appropriate list
+                lados_direitos[restricao_index].append(float(value))
 
 
     # Calcular o resultado
@@ -85,7 +97,6 @@ def evaluate():
 
     # Preços sombra p/ cada var
     precos_sombra = []
-
 
     # Envelopamento do resultado de cada var e do preco-sombra de cada var
     results = {}
