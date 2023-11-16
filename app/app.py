@@ -75,9 +75,15 @@ def evaluate():
     # Resultados
     results = simplex_calculator.simplex()
     print(f'Results: {results}')
+    
 
-    # Envelopamento do resultado de cada var e do preco-sombra de cada var
+    # Obtenção de valores ótimos
+
+
+    # Extração de preços-sombra
     #results = {"resultado_otimo": resultado_otimo, "precos_sombra": precos_sombra}
+
+
     return render_template('success.html', results=results)
 
 if __name__ == '__main__':
