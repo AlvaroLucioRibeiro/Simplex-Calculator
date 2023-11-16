@@ -91,7 +91,7 @@ footer div{
     border-style: none;
     border-width: 1px;
     box-shadow: 8px 8px 7px rgba(0, 0, 0, 0.678);
-    min-width: 23%;
+    min-width: 40%;
     min-height: 17em;
     background: linear-gradient(to bottom, #000000, rgb(0, 0, 0));
 }

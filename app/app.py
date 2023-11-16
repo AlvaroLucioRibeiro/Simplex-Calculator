@@ -1,4 +1,5 @@
 from flask import Flask, render_template, request, redirect, url_for
+from utils.simplex import Simplex
 
 app = Flask(__name__)
 
@@ -65,10 +66,10 @@ def evaluate():
     print(f'Lados Direitos: {lados_direitos}') # Primeiro elemento é o lado direito da F.O.
 
     # Calcular o resultado
-
+    simplex_calculator = Simplex(tipo_problema, num_variaveis, num_restricoes)
 
     # Valores Ótimos
-    vars = []
+    vars = simplex_calculator.
 
     # Preços sombra p/ cada var
     precos_sombra = []
