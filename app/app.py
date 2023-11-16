@@ -30,13 +30,13 @@ def evaluate():
     #print(f'keys: {len(request.form.keys())}')
     #print(f'form: {request.form}')
     '''
-    {'coef_objetivo0': '200', 'coef_objetivo1': '300', 'lado_direito_fo': '4000', 'coef_restricao00': '50', 'coef_restricao01': '60', 'lado_direito_0': '70', 'coef_restricao10': '80', 'coef_restricao11': '90', 'lado_direito_1': '100', 'coef_restricao20': '110', 'coef_restricao21': '120', 'lado_direito_2': '130', 'tipo_problema': 'max'}
+    {'coef_objetivo0': '5', 'coef_objetivo1': '9', 'coef_restricao00': '3', 'coef_restricao01': '0', 'lado_direito_0': '20', 'sinal_inequacao_0': 'less', 'coef_restricao10': '0', 'coef_restricao11': '1', 'lado_direito_1': '45', 'sinal_inequacao_1': 'less', 'coef_restricao20': '2', 'coef_restricao21': '5', 'lado_direito_2': '100', 'sinal_inequacao_2': 'greater', 'coef_restricao30': '4', 'coef_restricao31': '1', 'lado_direito_3': '45', 'sinal_inequacao_3': 'greater', 'coef_restricao40': '1', 'coef_restricao41': '1', 'lado_direito_4': '2', 'sinal_inequacao_4': 'less', 'coef_restricao50': '1', 'coef_restricao51': '1', 'lado_direito_5': '0', 'sinal_inequacao_5': 'greater', 'tipo_problema': 'max'}
     Tipo Problema: max
     Num. Variáveis: 2
     Num. Restrições: 3
     Coefs Objetivo: [200.0, 300.0]
     Coefs Restrições: [50.0, 60.0, 80.0, 90.0, 110.0, 120.0]
-    Lados Direitos: [4000.0, 70.0, 100.0, 130.0]
+    Lados Direitos: [400.0, 70.0, 100.0, 130.0, 500.0, 350.0]
     '''
 
     data = dict(request.form)
@@ -47,6 +47,7 @@ def evaluate():
     coefs_func_objetivo = []
     coefs_restricao = []
     lados_direitos = []
+    sinais = []
 
     # Extrair componentes do request
     for key, value in data.items():
@@ -56,6 +57,8 @@ def evaluate():
             coefs_restricao.append(float(value))
         elif key.startswith('lado_direito'):
             lados_direitos.append(float(value))
+        elif key.startswith('sinal_inequacao'):
+            sinais.append(value)
     
     
     print(f'Tipo Problema: {tipo_problema}')
@@ -63,23 +66,18 @@ def evaluate():
     print(f'Num. Restrições: {num_restricoes}')
     print(f'Coefs Objetivo: {coefs_func_objetivo}')
     print(f'Coefs Restrições: {coefs_restricao}')
-    print(f'Lados Direitos: {lados_direitos}') # Primeiro elemento é o lado direito da F.O.
+    print(f'Lados Direitos: {lados_direitos}')
+    print(f'Sinais das restricoes: {sinais}')
 
-    # Calcular o resultado
-    simplex_calculator = Simplex(tipo_problema, num_variaveis, num_restricoes)
+    # Instanciar calculadora Simplex
+    simplex_calculator = Simplex(tipo_problema, num_variaveis, num_restricoes, coefs_func_objetivo, coefs_restricao, lados_direitos, sinais)
 
-    # Valores Ótimos
-    vars = simplex_calculator.
-
-    # Preços sombra p/ cada var
-    precos_sombra = []
+    # Resultados
+    results = simplex_calculator.simplex()
+    print(f'Results: {results}')
 
     # Envelopamento do resultado de cada var e do preco-sombra de cada var
-    results = {}
-
-    results['vars'] = vars
-    results['precos_sombra'] = precos_sombra
-
+    #results = {"resultado_otimo": resultado_otimo, "precos_sombra": precos_sombra}
     return render_template('success.html', results=results)
 
 if __name__ == '__main__':

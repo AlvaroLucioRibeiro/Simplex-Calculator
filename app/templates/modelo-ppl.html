@@ -10,7 +10,6 @@
                 {% for i in range(num_variaveis) %}
                     <input class="input-calculate" type="number" name="coef_objetivo{{ i }}" placeholder="Coeficiente da Função Objetivo (C{{ i+1 }})" step="any" required><br>
                 {% endfor %}
-                <input class="input-calculate" type="number" name="lado_direito_fo" placeholder="Lado Direito da Função Objetivo" step="any" required><br>
         
                 {% for j in range(num_restricoes) %}
                     <h3 class="title-restricao-calculate">Restrição {{ j+1 }}:</h3>
@@ -19,6 +18,10 @@
                         <input class="input-calculate" type="number"  placeholder="Coeficiente A{{ j+1 }}{{ i+1 }}" name="coef_restricao{{ j }}{{ i }}" step="any" required><br>
                     {% endfor %}
                     <input class="input-calculate" type="number" name="lado_direito_{{ j }}" placeholder="Lado Direito da Restrição {{ j+1 }}" step="any" required><br>
+                    <select name="sinal_inequacao_{{ j }}" required>
+                        <option value="greater">Maior que</option>
+                        <option value="less">Menor que</option>
+                    </select><br>
                 {% endfor %}
                 <br>
                 <select name="tipo_problema" required>
