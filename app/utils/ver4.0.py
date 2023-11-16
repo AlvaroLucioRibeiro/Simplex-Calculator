@@ -46,7 +46,7 @@ def simplex(c, A, b, maximize=True):
 # Exemplo de entrada com os coeficientes corretos para maximização
 c = np.array([-5, -7, -8])  # Coeficientes da função objetivo com sinais corretos para maximização
 A = np.array([[1, 1, 2], [3, 4.5, 1]])  # Coeficientes das restrições
-b = np.array([1190, 4000])  # Valores das restrições
+b = np.array([1190, 4000])  # LDs das restrições
 
 # Execução do algoritmo simplex
 tableau, shadow_prices = simplex(c, A, b, maximize=True)
