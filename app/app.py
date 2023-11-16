@@ -59,8 +59,11 @@ def evaluate():
             lados_direitos.append(float(value))
         elif key.startswith('sinal_inequacao'):
             sinais.append(value)
-    
-    
+
+    # Transformando os coeficientes em negativo
+    coefs_func_objetivo = [-coef for coef in coefs_func_objetivo]
+
+
     print(f'Tipo Problema: {tipo_problema}')
     print(f'Num. Variáveis: {num_variaveis}')
     print(f'Num. Restrições: {num_restricoes}')
@@ -73,16 +76,28 @@ def evaluate():
     simplex_calculator = Simplex(tipo_problema, num_variaveis, num_restricoes, coefs_func_objetivo, coefs_restricao, lados_direitos, sinais)
 
     # Resultados
-    results = simplex_calculator.simplex()
-    print(f'Results: {results}')
-    
+    tableau, shadow_prices = simplex_calculator.simplex()
 
-    # Obtenção de valores ótimos
+    # Obtém a solução ótima e o valor ótimo a partir do tableau final
+    optimal_solution = tableau[:-1, -1]
+    optimal_value = tableau[-1, -1]
+    # Ajusta os preços sombra para terem o sinal correto
+    shadow_prices[shadow_prices != 0] = -shadow_prices[shadow_prices != 0]
 
+    # Formatação da saída da solução ótima
+    optimal_solution = optimal_solution[:]
 
-    # Extração de preços-sombra
-    #results = {"resultado_otimo": resultado_otimo, "precos_sombra": precos_sombra}
+    print(f'\n\noptimal_solution: {optimal_solution}\n\n')
 
+    print(f'optimal_value: {optimal_value}\n\n')
+
+    print(f'shadow_prices: {shadow_prices}')
+
+    results = {
+        "optimal_solution": optimal_solution,
+        "shadow_prices": shadow_prices,
+        "profit": optimal_value
+    }
 
     return render_template('success.html', results=results)
 

@@ -11,14 +11,12 @@
                     <th>Valor Ótimo Variáveis</th>
                     <th>Preço-Sombra</th>
                 </tr>
-                {% for result in results %}
-                    <tr>
-                        <td>{{ result.var }}</td>
-                        <td>{{ result.precos_sombra }}</td>
-                    </tr>
-                {% endfor %}
+                <tr>
+                    <td>{{ results.optimal_solution }}</td>
+                    <td>{{ results.shadow_prices }}</td>
+                </tr>
             </table>
-            <h3 id="result-lucro">Lucro Ótimo: {{ results.lucro }}</h3>
+            <h3 id="result-lucro">Lucro Ótimo: {{ results.profit }}</h3>
         </div>
     </main>
 {% endblock %}
