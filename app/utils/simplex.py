@@ -3,7 +3,7 @@ import numpy as np
 
 class Simplex():
     # Simplex Setup
-    def __init__(self, tipo_problema, n_var, n_restricoes, coefs_funcao_objetivo, coefs_restricoes, lados_direitos, sinais) -> None:
+    def __init__(self, n_var, n_restricoes, coefs_funcao_objetivo, coefs_restricoes, lados_direitos, sinais) -> None:
         self.n_var = n_var # Número de variáveis
         self.n_restricoes = n_restricoes # Número de restrições
         self.c = coefs_funcao_objetivo # Lista de cada coeficiente da função objetivo. Ex.: Z = 5A + 3B coefs_funcao_objetivo = [5, 3]
@@ -11,7 +11,7 @@ class Simplex():
         self.b = lados_direitos  # Lista de cada coeficiente de restrição do Lado Direito da equação. Ex.: 10A + 3B < 30; 13A + 12B >= 55; 32A + 9B >= 78 lados_direitos = [30, 55, 78]
         self.sinais = sinais # Indica se o sinal é maior igual ou menor de cada equação das restrições. Ex.: Ex.: 10A + 3B < 30; 13A + 12B >= 55; 32A + 9B >= 78 sinais = ['less', 'greater', 'greater']
 
-        self.maximize = True if tipo_problema == 'max' else False # Definir tipo do problema
+        self.maximize = True
 
     # Função para realizar operações de pivoteamento na tabela simplex.
     def pivot_on(self):

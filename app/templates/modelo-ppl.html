@@ -24,17 +24,13 @@
                     </select><br>
                 {% endfor %}
                 <br>
-                <select name="tipo_problema" required>
-                    <option value="max">Maximizar</option>
-                    <option value="min">Minimizar</option>
-                </select><br>
         
                 <input class="input-calculate" type="submit" value="Calcular PPL">
             </form>
         </div>
     </main>
 {% endblock %}
-{% block project_description %}Simplex PPL Calculator{% endblock %}
-{% block contributors %}Contributed by: John Doe{% endblock %}
+{% block project_description %}LLP Calculator using Simplex Method{% endblock %}
+{% block contributors %}Contributed by: <a href="https://github.com/AlvaroLucioRibeiro">Álvaro Lúcio</a>, <a href="https://github.com/Isaquehg">Isaque Hollanda</a> & <a href="https://github.com/PedroLuisDionisioFraga">Pedro Dionísio</a>{% endblock %}
 
 <link rel="stylesheet" href="../static/modelo-ppl.css">

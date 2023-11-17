@@ -43,7 +43,6 @@ def evaluate():
     print(data)
 
     # Initialize lists to store coefficients
-    tipo_problema = data['tipo_problema']
     coefs_func_objetivo = []
     coefs_restricao = []
     lados_direitos = []
@@ -74,7 +73,6 @@ def evaluate():
 
     coefs_restricao = restricoes_array
 
-    print(f'Tipo Problema: {tipo_problema}')
     print(f'Num. Variáveis: {num_variaveis}')
     print(f'Num. Restrições: {num_restricoes}')
     print(f'Coefs Objetivo: {coefs_func_objetivo}')
@@ -83,7 +81,7 @@ def evaluate():
     print(f'Sinais das restricoes: {sinais}')
 
     # Instanciar calculadora Simplex
-    simplex_calculator = Simplex(tipo_problema, num_variaveis, num_restricoes, coefs_func_objetivo, coefs_restricao, lados_direitos, sinais)
+    simplex_calculator = Simplex(num_variaveis, num_restricoes, coefs_func_objetivo, coefs_restricao, lados_direitos, sinais)
 
     # Resultados
     optimal_solution, optimal_value, shadow_prices = simplex_calculator.simplex()

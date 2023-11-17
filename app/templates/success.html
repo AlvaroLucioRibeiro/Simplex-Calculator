@@ -6,19 +6,11 @@
     <main>
         <div id="container-result">
             <h2 id="title-result">Resultado Final</h2>
-            <table id="table-result">
-                <tr>
-                    <th>Valor Ótimo Variáveis</th>
-                    <th>Preço-Sombra</th>
-                </tr>
-                <tr>
-                    <td>{{ results.optimal_solution }}</td>
-                    <td>{{ results.shadow_prices }}</td>
-                </tr>
-            </table>
-            <h3 id="result-lucro">Lucro Ótimo: {{ results.profit }}</h3>
+            <h3 id="result-lucro">Lucro Ótimo: R${{ results.profit }}</h3>
+            <p class="results" id="optimal-result">Resultado Ótimo: {{ results.optimal_solution }}</p>
+            <p class="results" id="shadow-price-result">Preços-Sombra: {{ results.shadow_prices }}</p>
         </div>
     </main>
 {% endblock %}
-{% block project_description %}Description for the home page{% endblock %}
-{% block contributors %}Contributed by: John Doe{% endblock %}
+{% block project_description %}LLP Calculator using Simplex Method{% endblock %}
+{% block contributors %}Contributed by: <a href="https://github.com/AlvaroLucioRibeiro">Álvaro Lúcio</a>, <a href="https://github.com/Isaquehg">Isaque Hollanda</a> & <a href="https://github.com/PedroLuisDionisioFraga">Pedro Dionísio</a>{% endblock %}
