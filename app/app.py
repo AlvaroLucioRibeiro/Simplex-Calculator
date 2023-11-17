@@ -63,6 +63,14 @@ def evaluate():
     # Transformando os coeficientes em negativo
     coefs_func_objetivo = [-coef for coef in coefs_func_objetivo]
 
+    # Convertendo lista de restrições para Array de restrições
+    restricoes_array = []  # Initialize as an empty list
+    for i in range(coefs_restricao):
+        # Initialize the sublist for each row
+        row_list = []
+        for j in range(num_variaveis):
+            row_list.append(coefs_restricao[j + i * num_variaveis])  # Adjust the index to get the correct coefficient
+        restricoes_array.append(row_list)
 
     print(f'Tipo Problema: {tipo_problema}')
     print(f'Num. Variáveis: {num_variaveis}')
@@ -76,16 +84,10 @@ def evaluate():
     simplex_calculator = Simplex(tipo_problema, num_variaveis, num_restricoes, coefs_func_objetivo, coefs_restricao, lados_direitos, sinais)
 
     # Resultados
-    tableau, shadow_prices = simplex_calculator.simplex()
-
-    # Obtém a solução ótima e o valor ótimo a partir do tableau final
-    optimal_solution = tableau[:-1, -1]
-    optimal_value = tableau[-1, -1]
-    # Ajusta os preços sombra para terem o sinal correto
-    shadow_prices[shadow_prices != 0] = -shadow_prices[shadow_prices != 0]
+    optimal_solution, optimal_value, shadow_prices = simplex_calculator.simplex()
 
     # Formatação da saída da solução ótima
-    optimal_solution = optimal_solution[:]
+    
 
     print(f'\n\noptimal_solution: {optimal_solution}\n\n')
 
