@@ -19,6 +19,7 @@ def simplex(c, A, b, maximize=True):
     # Construção do tableau inicial.
     A = np.hstack((A, np.eye(len(A))))  # Adiciona as variáveis de folga à matriz de restrições A.
     c = np.concatenate((c, np.zeros(len(A))))  # Adiciona zeros correspondentes às variáveis de folga na função objetivo.
+    print(f'A: {A} e c: {c}')
     tableau = np.vstack((A, c))  # Combina A e c para formar o tableau.
     b = np.concatenate((b, [0]))  # Adiciona o lado direito das restrições e o valor da função objetivo (0) ao tableau.
     tableau = np.column_stack((tableau, b))  # Adiciona a coluna do lado direito ao tableau.

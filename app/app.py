@@ -65,12 +65,14 @@ def evaluate():
 
     # Convertendo lista de restrições para Array de restrições
     restricoes_array = []  # Initialize as an empty list
-    for i in range(coefs_restricao):
+    for i in range(num_restricoes):
         # Initialize the sublist for each row
         row_list = []
         for j in range(num_variaveis):
             row_list.append(coefs_restricao[j + i * num_variaveis])  # Adjust the index to get the correct coefficient
         restricoes_array.append(row_list)
+
+    coefs_restricao = restricoes_array
 
     print(f'Tipo Problema: {tipo_problema}')
     print(f'Num. Variáveis: {num_variaveis}')

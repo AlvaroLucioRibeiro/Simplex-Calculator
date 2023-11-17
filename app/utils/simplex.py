@@ -7,7 +7,7 @@ class Simplex():
         self.n_var = n_var # Número de variáveis
         self.n_restricoes = n_restricoes # Número de restrições
         self.c = coefs_funcao_objetivo # Lista de cada coeficiente da função objetivo. Ex.: Z = 5A + 3B coefs_funcao_objetivo = [5, 3]
-        self.A = coefs_restricoes # Lista de cada coeficiente das restrições. Ex.: 10A + 3B < 30; 13A + 12B >= 55; 32A + 9B >= 78 coefs_restricoes = [10, 3, 13, 12, 32, 9]
+        self.A = coefs_restricoes # Lista de cada coeficiente das restrições. Ex.: 10A + 3B < 30; 13A + 12B >= 55; 32A + 9B >= 78 coefs_restricoes = [[10, 3], [13, 12], [32, 9]]
         self.b = lados_direitos  # Lista de cada coeficiente de restrição do Lado Direito da equação. Ex.: 10A + 3B < 30; 13A + 12B >= 55; 32A + 9B >= 78 lados_direitos = [30, 55, 78]
         self.sinais = sinais # Indica se o sinal é maior igual ou menor de cada equação das restrições. Ex.: Ex.: 10A + 3B < 30; 13A + 12B >= 55; 32A + 9B >= 78 sinais = ['less', 'greater', 'greater']
 
@@ -30,6 +30,7 @@ class Simplex():
             self.c = -self.c  # Inverte os sinais dos coeficientes da função objetivo.
         
         # Construção do tableau inicial.
+        print(f'A: {self.A} e c: {self.c}')
         self.A = np.hstack((self.A, np.eye(len(self.A))))  # Adiciona as variáveis de folga à matriz de restrições A.
         self.c = np.concatenate((self.c, np.zeros(len(self.A))))  # Adiciona zeros correspondentes às variáveis de folga na função objetivo.
         self.tableau = np.vstack((self.A, self.c))  # Combina A e c para formar o tableau.
