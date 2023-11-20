@@ -1,4 +1,5 @@
 import numpy as np
+from itertools import combinations
 
 # Função para realizar operações de pivoteamento na tabela simplex.
 def pivot_on(tableau, row, col):
@@ -12,32 +13,34 @@ def pivot_on(tableau, row, col):
         tableau[r, :] -= tableau[r, col] * tableau[row, :]
 
 # Função principal do método simplex.
-def simplex(c, A, b, maximize=True):
-    if not maximize:  # Se o problema é de minimização...
-        c = -c  # Inverte os sinais dos coeficientes da função objetivo.
-        
-    # Construção do tableau inicial.
-    A = np.hstack((A, np.eye(len(A))))  # Adiciona as variáveis de folga à matriz de restrições A.
-    c = np.concatenate((c, np.zeros(len(A))))  # Adiciona zeros correspondentes às variáveis de folga na função objetivo.
-    print(f'A: {A} e c: {c}')
-    tableau = np.vstack((A, c))  # Combina A e c para formar o tableau.
-    b = np.concatenate((b, [0]))  # Adiciona o lado direito das restrições e o valor da função objetivo (0) ao tableau.
-    tableau = np.column_stack((tableau, b))  # Adiciona a coluna do lado direito ao tableau.
+def simplex(c, A, b, comparisons):
+    if len(comparisons) != len(A):
+        raise ValueError("Número de comparações deve ser igual ao número de restrições.")
 
-    # Processo iterativo do método simplex.
-    while (maximize and np.any(tableau[-1, :-1] < 0)) or (not maximize and np.any(tableau[-1, :-1] > 0)):
-        # Escolha da coluna do pivô (coluna de entrada).
-        if maximize:
-            col = np.argmin(tableau[-1, :-1])  # Para maximização: escolhe o menor valor negativo na linha da função objetivo.
-        else:
-            col = np.argmax(tableau[-1, :-1])  # Para minimização: escolhe o maior valor na linha da função objetivo.
-        # Se todos os elementos na coluna do pivô são ≤ 0, então o problema é ilimitado (sem solução ótima).
+    # Ajustando o tableau para diferentes comparações
+    for i, comp in enumerate(comparisons):
+        if comp == 'greater':
+            A[i] = -A[i]  # Inverte a restrição para '<='
+            b[i] = -b[i]  # Inverte o lado direito da restrição
+        elif comp != 'less':
+            raise ValueError("Comparação inválida. Use 'less' ou 'greater'.")
+
+    # Restante do código para construir o tableau
+    A = np.hstack((A, np.eye(len(A))))  # Adiciona as variáveis de folga
+    c = np.concatenate((c, np.zeros(len(A))))  # Zeros para as variáveis de folga
+    tableau = np.vstack((A, c))  # Combina A e c
+    b = np.concatenate((b, [0]))  # Lado direito das restrições e valor da função objetivo
+    tableau = np.column_stack((tableau, b))  # Adiciona a coluna do lado direito
+
+    # Processo iterativo do método simplex
+    while np.any(tableau[-1, :-1] < 0):
+        col = np.argmin(tableau[-1, :-1])  # Coluna de entrada
         if np.all(tableau[:, col] <= 0):
             raise ValueError("Problema sem solução.")
-        # Escolha da linha do pivô (linha de saída).
-        ratios = tableau[:-1, -1] / tableau[:-1, col]  # Calcular as razões entre o lado direito e os elementos da coluna do pivô.
-        row = np.argmin(np.where(tableau[:-1, col] > 0, ratios, np.inf))  # A linha do pivô é a que tem o menor valor positivo na razão.
-        pivot_on(tableau, row, col)  # Realiza a operação de pivoteamento.
+        
+        ratios = tableau[:-1, -1] / tableau[:-1, col]  # Razões
+        row = np.argmin(np.where(tableau[:-1, col] > 0, ratios, np.inf))
+        pivot_on(tableau, row, col)
 
     # Após concluir as iterações, os preços sombra podem ser encontrados na última linha do tableau (negativos para maximização).
     shadow_prices = -tableau[-1, len(c)-len(A):len(c)]  # Apenas os preços sombra das restrições originais.
@@ -45,20 +48,41 @@ def simplex(c, A, b, maximize=True):
     return tableau, shadow_prices
 
 # Exemplo de entrada com os coeficientes corretos para maximização
-c = np.array([-3, -1, -5])  # Coeficientes da função objetivo com sinais corretos para maximização
-A = np.array([[6, 3, -5], [3, 4, 5]])  # Coeficientes das restrições
-b = np.array([45, 30])  # LDs das restrições
+c = np.array([-24, -22, -45])  # Coeficientes da função objetivo com sinais corretos para maximização
+A = np.array([[2,1,3], [2,1,2],[1,1,1]])  # Coeficientes das restrições
+b = np.array([42,40,45])  # LDs das restrições
+
+comparisons = ['less', 'less','less']  # Define a comparação para cada restrição
 
 # Execução do algoritmo simplex
-tableau, shadow_prices = simplex(c, A, b, maximize=True)
+tableau, shadow_prices = simplex(c, A, b, comparisons)
+
 # Obtém a solução ótima e o valor ótimo a partir do tableau final
 optimal_solution = tableau[:-1, -1]
 optimal_value = tableau[-1, -1]
+
 # Ajusta os preços sombra para terem o sinal correto
 shadow_prices[shadow_prices != 0] = -shadow_prices[shadow_prices != 0]
+
+# Função para ajustar -0 para 0
+def adjust_shadow_prices(shadow_prices):
+    return np.where(shadow_prices == -0.0, 0.0, shadow_prices)
+
+# Ajusta os preços sombra antes de imprimi-los
+adjusted_shadow_prices = adjust_shadow_prices(shadow_prices)
+
+# --------------------------------------- Saída de Dados --------------------------------------- #
 
 # Formatação da saída da solução ótima
 optimal_solution = optimal_solution[:]
 print("Solução Ótima:", optimal_solution)
 print("Valor Ótimo:", optimal_value)
-print("Preços Sombra:", shadow_prices)
+print("Preços Sombra:", adjusted_shadow_prices)
+
+# Função ajustada para extrair as variáveis de decisão originais da solução ótima
+def extract_decision_variables_corrected(optimal_solution, num_decision_vars):
+    return optimal_solution[-num_decision_vars:]
+
+# Ajustando a extração das variáveis de decisão originais
+decision_vars_corrected = extract_decision_variables_corrected(optimal_solution, 3)
+print(decision_vars_corrected)

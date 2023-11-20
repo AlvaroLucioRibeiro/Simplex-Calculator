@@ -10,9 +10,9 @@ def ppl_setup():
     if request.method == 'POST':
         #print(request.form)
         #ImmutableMultiDict([('num_variaveis', '2'), ('tipo_problema', 'max'), ('num_restricoes', '5')])
-
         global num_variaveis
         global num_restricoes
+        global comparisons
         num_variaveis = int(request.form['num_variaveis'])
         num_restricoes = int(request.form['num_restricoes'])
 
@@ -87,7 +87,7 @@ def evaluate():
     optimal_solution, optimal_value, shadow_prices = simplex_calculator.simplex()
 
     # Formatação da saída da solução ótima
-    
+
 
     print(f'\n\noptimal_solution: {optimal_solution}\n\n')
 
