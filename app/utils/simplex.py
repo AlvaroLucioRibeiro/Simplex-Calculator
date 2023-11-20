@@ -24,6 +24,15 @@ class Simplex():
 
     # Função principal do método simplex.
     def simplex(self):
+        # TODO: Deixar negativo as variáveis de folga caso seja maior ou igual "greater"
+        # Ajustando o tableau para diferentes comparações
+        for i, comp in enumerate(self.sinais):
+            if comp == "greater":
+                self.A[i] = -self.A[i]  # Inverte a restrição para "<="
+                self.b[i] = -self.b[i]  # Inverte o lado direito da restrição
+            elif comp != "less":
+                raise ValueError("Comparação inválida. Use 'less' ou 'greater'.")
+            
         # Construção do tableau inicial.
         print(f'A: {self.A} e c: {self.c}')
         self.A = np.hstack((self.A, np.eye(len(self.A))))  # Adiciona as variáveis de folga à matriz de restrições A.
