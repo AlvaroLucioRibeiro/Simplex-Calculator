@@ -90,5 +90,5 @@ def extract_decision_variables_corrected(optimal_solution, num_decision_vars):
     return optimal_solution[-num_decision_vars:]
 
 # Ajustando a extração das variáveis de decisão originais
-decision_vars_corrected = extract_decision_variables_corrected(optimal_solution, 3)
+decision_vars_corrected = extract_decision_variables_corrected(optimal_solution, len(c) - 1)
 print(f"Variáveis de decisão corretas: {decision_vars_corrected}")
