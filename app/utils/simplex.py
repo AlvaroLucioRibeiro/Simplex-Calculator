@@ -3,14 +3,13 @@ import numpy as np
 
 class Simplex():
     # Simplex Setup
-    def __init__(self, n_var, n_restricoes, coefs_funcao_objetivo, coefs_restricoes, lados_direitos, sinais, comparisons) -> None:
-        self.n_var = n_var  # Número de variáveis
-        self.n_restricoes = n_restricoes  # Número de restrições
-        self.c = coefs_funcao_objetivo  # Lista de cada coeficiente da função objetivo. Ex.: Z = 5A + 3B coefs_funcao_objetivo = [5, 3]
-        self.A = coefs_restricoes  # Lista de cada coeficiente das restrições. Ex.: 10A + 3B < 30; 13A + 12B >= 55; 32A + 9B >= 78 coefs_restricoes = [[10, 3], [13, 12], [32, 9]]
+    def __init__(self, n_var, n_restricoes, coefs_funcao_objetivo, coefs_restricoes, lados_direitos, sinais) -> None:
+        self.n_var = n_var # Número de variáveis
+        self.n_restricoes = n_restricoes # Número de restrições
+        self.c = coefs_funcao_objetivo # Lista de cada coeficiente da função objetivo. Ex.: Z = 5A + 3B coefs_funcao_objetivo = [5, 3]
+        self.A = coefs_restricoes # Lista de cada coeficiente das restrições. Ex.: 10A + 3B < 30; 13A + 12B >= 55; 32A + 9B >= 78 coefs_restricoes = [[10, 3], [13, 12], [32, 9]]
         self.b = lados_direitos  # Lista de cada coeficiente de restrição do Lado Direito da equação. Ex.: 10A + 3B < 30; 13A + 12B >= 55; 32A + 9B >= 78 lados_direitos = [30, 55, 78]
-        self.sinais = sinais  # Indica se o sinal é maior igual ou menor de cada equação das restrições. Ex.: Ex.: 10A + 3B < 30; 13A + 12B >= 55; 32A + 9B >= 78 sinais = ['less', 'greater', 'greater']
-        self.comparisons = comparisons
+        self.sinais = sinais # Indica se o sinal é maior igual ou menor de cada equação das restrições. Ex.: Ex.: 10A + 3B < 30; 13A + 12B >= 55; 32A + 9B >= 78 sinais = ['less', 'greater', 'greater']
 
     # Função para realizar operações de pivoteamento na tabela simplex.
     def pivot_on(self):
@@ -25,17 +24,6 @@ class Simplex():
 
     # Função principal do método simplex.
     def simplex(self):
-        if len(self.comparisons) != len(self.A):
-            raise ValueError("Número de comparações deve ser igual ao número de restrições.")
-
-        # Ajustando o tableau para diferentes comparações
-        for i, comp in enumerate(self.comparisons):
-            if comp == 'greater':
-                self.A[i] = -self.A[i]  # Inverte a restrição para '<='
-                self.b[i] = -self.b[i]  # Inverte o lado direito da restrição
-            elif comp != 'less':
-                raise ValueError("Comparação inválida. Use 'less' ou 'greater'.")
-
         # Construção do tableau inicial.
         print(f'A: {self.A} e c: {self.c}')
         self.A = np.hstack((self.A, np.eye(len(self.A))))  # Adiciona as variáveis de folga à matriz de restrições A.
@@ -45,14 +33,19 @@ class Simplex():
         self.tableau = np.column_stack((self.tableau, self.b))  # Adiciona a coluna do lado direito ao tableau.
 
         # Processo iterativo do método simplex.
-        while (np.any(self.tableau[-1, :-1] < 0)) or (np.any(self.tableau[-1, :-1] > 0)):
-            self.col = np.argmin(self.tableau[-1, :-1])  # Coluna de entrada
+        while (self.maximize and np.any(self.tableau[-1, :-1] < 0)) or (not self.maximize and np.any(self.tableau[-1, :-1] > 0)):
+            # Escolha da coluna do pivô (coluna de entrada).
+            if self.maximize:
+                self.col = np.argmin(self.tableau[-1, :-1])  # Para maximização: escolhe o menor valor negativo na linha da função objetivo.
+            else:
+                self.col = np.argmax(self.tableau[-1, :-1])  # Para minimização: escolhe o maior valor na linha da função objetivo.
+            # Se todos os elementos na coluna do pivô são ≤ 0, então o problema é ilimitado (sem solução ótima).
             if np.all(self.tableau[:, self.col] <= 0):
                 raise ValueError("Problema sem solução.")
-
-            ratios = self.tableau[:-1, -1] / self.tableau[:-1, self.col]  # Razões
-            self.row = np.argmin(np.where(self.tableau[:-1, self.col] > 0, ratios, np.inf))
-            self.pivot_on(self.tableau, self.row, self.col)
+            # Escolha da linha do pivô (linha de saída).
+            ratios = self.tableau[:-1, -1] / self.tableau[:-1, self.col]  # Calcular as razões entre o lado direito e os elementos da coluna do pivô.
+            self.row = np.argmin(np.where(self.tableau[:-1, self.col] > 0, ratios, np.inf))  # A linha do pivô é a que tem o menor valor positivo na razão.
+            self.pivot_on()  # Realiza a operação de pivoteamento.
 
         # Após concluir as iterações, os preços sombra podem ser encontrados na última linha do tableau (negativos para maximização).
         shadow_prices = -self.tableau[-1, len(self.c)-len(self.A):len(self.c)]  # Apenas os preços sombra das restrições originais.
