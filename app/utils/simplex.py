@@ -33,7 +33,7 @@ class Simplex():
         self.tableau = np.column_stack((self.tableau, self.b))  # Adiciona a coluna do lado direito ao tableau.
 
         # Processo iterativo do método simplex.
-        while (self.maximize and np.any(self.tableau[-1, :-1] < 0)) or (not self.maximize and np.any(self.tableau[-1, :-1] > 0)):
+        while (np.any(self.tableau[-1, :-1] < 0)) or (np.any(self.tableau[-1, :-1] > 0)):
             # Escolha da coluna do pivô (coluna de entrada).
             if self.maximize:
                 self.col = np.argmin(self.tableau[-1, :-1])  # Para maximização: escolhe o menor valor negativo na linha da função objetivo.
