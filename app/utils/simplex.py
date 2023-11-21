@@ -83,7 +83,7 @@ class Simplex():
         return self.optimal_solution, self.optimal_value, self.shadow_prices
 
 
-# Exemplo de entrada com os coeficientes corretos para maximização
+# EXEMPLO 1 de entrada com os coeficientes corretos para maximização
 c = np.array([-3000, -5000])  # Coeficientes da função objetivo com sinais corretos para maximização
 A = np.array([[0.5, 0.2], [0.25, 0.3], [0.25, 0.5]])  # Coeficientes das restrições
 b = np.array([16,11,15])  # LDs das restrições
@@ -92,7 +92,7 @@ comparisons = ['less', 'less', 'less']  # Define a comparação para cada restri
 
 
 '''
-# Exemplo de entrada com os coeficientes corretos para maximização
+# EXEMPLO 2 de entrada com os coeficientes corretos para maximização
 c = np.array([-5, -7, -8])  # Coeficientes da função objetivo com sinais corretos para maximização
 A = np.array([[1, 1, 2], [3, 4.5, 1]])  # Coeficientes das restrições
 b = np.array([1190, 4000])  # LDs das restrições
@@ -101,7 +101,7 @@ comparisons = ['less', 'less']  # Define a comparação para cada restrição
 '''
 
 '''
-# Exemplo de entrada com os coeficientes corretos para maximização
+# EXEMPLO 3 de entrada com os coeficientes corretos para maximização
 c = np.array([-6, -4, -6, -8])  # Coeficientes da função objetivo com sinais corretos para maximização
 A = np.array([[3, 2, 2, 4], [1, 1, 2, 3], [2, 1, 2, 1], [1, 0, 0, 0], [0, 1, 1, 0], [0, 0, 0, 1]])  # Coeficientes das restrições
 b = np.array([480, 400, 400, 50, 100, 25])  # LDs das restrições
