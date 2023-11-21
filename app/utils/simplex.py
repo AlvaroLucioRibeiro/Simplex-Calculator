@@ -43,8 +43,7 @@ class Simplex():
         self.tableau = np.vstack((self.A, self.c))  # Combina A e c
         self.b = np.concatenate((self.b, [0]))  # Lado direito das restrições e valor da função objetivo
         self.tableau = np.column_stack((self.tableau, self.b))  # Adiciona a coluna do lado direito
-
-        print(f"A:\n{self.A}\n---")
+        print(f"Tableau Inicial: {self.tableau}")
 
         # Processo iterativo do método simplex
         while np.any(self.tableau[-1, :-1] < 0):
@@ -57,42 +56,70 @@ class Simplex():
             self.pivot_on()
 
         # Após concluir as iterações, os preços sombra podem ser encontrados na última linha do tableau (negativos para maximização).
-        shadow_prices = -self.tableau[-1, len(self.c)-len(self.A):len(self.c)]  # Apenas os preços sombra das restrições originais.
-        # Obtém a solução ótima e o valor ótimo a partir do self.tableau final
-        optimal_solution = self.tableau[:-1, -1]
-        optimal_value = self.tableau[-1, -1]
+        self.shadow_prices = -self.tableau[-1, len(self.c)-len(self.A):len(self.c)]  # Apenas os preços sombra das restrições originais.
+        # Ajusta os preços sombra para terem o sinal correto
+        self.shadow_prices[self.shadow_prices != 0] = -self.shadow_prices[self.shadow_prices != 0]
+        # Função para ajustar -0 para 0
+        self.shadow_prices = np.where(self.shadow_prices == -0.0, 0.0, self.shadow_prices)
+        
+        # Obtém a solução ótima e o valor ótimo a partir do tableau final
+        #optimal_solution = self.tableau[:-1, -1]
+        self.optimal_solution = []
+        for list in self.tableau:
+            self.optimal_solution.append(list[-1])
 
-        return optimal_solution, optimal_value, shadow_prices
+        self.optimal_solution.pop() # Remove último elemento
+
+        while(len(self.optimal_solution) > self.n_var):
+            self.optimal_solution.pop(0)
+
+        print(f"Optimal solution initial: {self.optimal_solution}")
+        self.optimal_value = self.tableau[-1, -1]
+        if(len(self.optimal_solution) < self.n_var):
+            self.optimal_solution.append(0.0)
+
+        print(f"Tableau Final: {self.tableau}")
+
+        return self.optimal_solution, self.optimal_value, self.shadow_prices
 
 
+# Exemplo de entrada com os coeficientes corretos para maximização
+c = np.array([-3000, -5000])  # Coeficientes da função objetivo com sinais corretos para maximização
+A = np.array([[0.5, 0.2], [0.25, 0.3], [0.25, 0.5]])  # Coeficientes das restrições
+b = np.array([16,11,15])  # LDs das restrições
+comparisons = ['less', 'less', 'less']  # Define a comparação para cada restrição
+# RESULTADO CORRETO: $160.000 -> (20,20)
+
+
+'''
+# Exemplo de entrada com os coeficientes corretos para maximização
+c = np.array([-5, -7, -8])  # Coeficientes da função objetivo com sinais corretos para maximização
+A = np.array([[1, 1, 2], [3, 4.5, 1]])  # Coeficientes das restrições
+b = np.array([1190, 4000])  # LDs das restrições
+comparisons = ['less', 'less']  # Define a comparação para cada restrição
+# RESULTADO CORRETO: $7313.75 -> (0; 851.25; 169.38)
+'''
+
+'''
 # Exemplo de entrada com os coeficientes corretos para maximização
 c = np.array([-6, -4, -6, -8])  # Coeficientes da função objetivo com sinais corretos para maximização
 A = np.array([[3, 2, 2, 4], [1, 1, 2, 3], [2, 1, 2, 1], [1, 0, 0, 0], [0, 1, 1, 0], [0, 0, 0, 1]])  # Coeficientes das restrições
 b = np.array([480, 400, 400, 50, 100, 25])  # LDs das restrições
-
 comparisons = ['less', 'less','less', 'greater', 'greater', 'less']  # Define a comparação para cada restrição
+# RESULTADO CORRETO: $1250 -> (50, 0, 145, 10)
+'''
 
-teste = Simplex(4, 6, c, A, b, comparisons)
+teste = Simplex(2, 3, c, A, b, comparisons)
 # Execução do algoritmo simplex
 optimal_solution, optimal_value, shadow_prices = teste.simplex()
-
-# Ajusta os preços sombra para terem o sinal correto
-shadow_prices[shadow_prices != 0] = -shadow_prices[shadow_prices != 0]
-
-# Função para ajustar -0 para 0
-def adjust_shadow_prices(shadow_prices):
-    return np.where(shadow_prices == -0.0, 0.0, shadow_prices)
-
-# Ajusta os preços sombra antes de imprimi-los
-adjusted_shadow_prices = adjust_shadow_prices(shadow_prices)
 
 # --------------------------------------- Saída de Dados --------------------------------------- #
 
 # Formatação da saída da solução ótima
-optimal_solution = optimal_solution[:]
+#optimal_solution = optimal_solution[:]
 print("Solução Ótima:", optimal_solution)
 print("Valor Ótimo:", optimal_value)
-print("Preços Sombra:", adjusted_shadow_prices)
+print("Preços Sombra:", shadow_prices)
 
 # Função ajustada para extrair as variáveis de decisão originais da solução ótima
 def extract_decision_variables_corrected(optimal_solution, num_decision_vars):
