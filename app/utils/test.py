@@ -140,12 +140,33 @@ class Simplex():
                     optimal_values[key] = 0.0
 
         # Find shadow-prices
-        shadow_prices = {}
+        shadow_prices = []
         row = self.tableau[1][1:-1]
-        shadow_prices_values = row[-self.n_restricoes:]
+        shadow_prices = row[-self.n_restricoes:]
 
-        for i in range(self.n_restricoes):
-            shadow_prices[f"x{i+1}"] = shadow_prices_values[i]
-        
-        
         return optimal_profit, optimal_values, shadow_prices
+
+
+# Example usage:
+simplex_instance = Simplex(
+    coefs_funcao_objetivo=[20, 60],
+    coefs_restricoes=[[70, 70], [90, 50], [2, 0], [0, 3]],
+    lados_direitos=[4900, 4500, 80, 180],
+    sinais=['less', 'less', 'greater', 'greater']
+)
+
+
+'''
+simplex_instance = Simplex(
+    coefs_funcao_objetivo=[6, 4, 6, 8],
+    coefs_restricoes=[[3,2,2,4], [1,1,2,3], [2,1,2,1], [1,0,0,0], [0,1,1,0], [0,0,0,1]],
+    lados_direitos=[480,400,400,50,100,25],
+    sinais=['less', 'less', 'less', 'greater', 'greater', 'less']
+)
+# RESULTADO CORRETO: $1250 -> (50, 0, 145, 10)
+'''
+
+optimal_profit, optimal_values, shadow_prices = simplex_instance.get_results()
+print(f"Optimal Profit: {optimal_profit}")
+print(f"Optimal Values: {optimal_values}")
+print(f"Shadow Prices: {shadow_prices}")

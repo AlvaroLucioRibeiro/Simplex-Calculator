@@ -81,24 +81,24 @@ def evaluate():
     print(f'Sinais das restricoes: {sinais}')
 
     # Instanciar calculadora Simplex
-    simplex_calculator = Simplex(num_variaveis, num_restricoes, coefs_func_objetivo, coefs_restricao, lados_direitos, sinais)
+    simplex_calculator = Simplex(coefs_func_objetivo, coefs_restricao, lados_direitos, sinais)
 
     # Resultados
-    optimal_solution, optimal_value, shadow_prices = simplex_calculator.simplex()
+    optimal_solution, optimal_values, shadow_prices = simplex_calculator.get_results()
 
     # Formatação da saída da solução ótima
     
 
     print(f'\n\noptimal_solution: {optimal_solution}\n\n')
 
-    print(f'optimal_value: {optimal_value}\n\n')
+    print(f'optimal_value: {optimal_values}\n\n')
 
     print(f'shadow_prices: {shadow_prices}')
 
     results = {
-        "optimal_solution": optimal_solution,
-        "shadow_prices": shadow_prices,
-        "profit": optimal_value
+        "profit": optimal_solution,
+        "optimal_values": optimal_values,
+        "shadow_prices": shadow_prices
     }
 
     return render_template('success.html', results=results)

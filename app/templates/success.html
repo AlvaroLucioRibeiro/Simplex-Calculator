@@ -7,8 +7,18 @@
         <div id="container-result">
             <h2 id="title-result">Resultado Final</h2>
             <h3 id="result-lucro">Lucro Ótimo: R${{ results.profit }}</h3>
-            <p class="results" id="optimal-result">Resultado Ótimo: {{ results.optimal_solution }}</p>
-            <p class="results" id="shadow-price-result">Preços-Sombra: {{ results.shadow_prices }}</p>
+            <h3 id="result-lucro">Valores Ótimos:</h3>
+            <ul>
+                {% for key, value in results.optimal_values.items() %}
+                    <li class="results" id="optimal-result">{{ key }}: R${{ value }}</li>
+                {% endfor %}
+            </ul>
+            <h3 id="result-lucro">Preços-Sombra:</h3>
+            <ul>
+                {% for key, value in results.shadow_prices.items() %}
+                    <li class="results" id="shadow-price-result">Preço-Sombra da Restrição {{ key }}: R${{ value }}</li>
+                {% endfor %}
+            </ul>    
         </div>
     </main>
 {% endblock %}
