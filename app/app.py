@@ -84,21 +84,29 @@ def evaluate():
     simplex_calculator = Simplex(coefs_func_objetivo, coefs_restricao, lados_direitos, sinais)
 
     # Resultados
-    optimal_solution, optimal_values, shadow_prices = simplex_calculator.get_results()
+    optimal_solution, optimal_values, shadow_prices, tableau = simplex_calculator.get_results()
 
-    # Formatação da saída da solução ótima
-    
+    # Formatação da saída do tableau (Converter tudo para string)
+    tableau[0][0] = "LD"
+    for index_row, row in enumerate(tableau):
+        for index_col, value in enumerate(row):
+            if (type(value) is not str):
+                tableau[index_row, index_col] = str(value)
 
-    print(f'\n\noptimal_solution: {optimal_solution}\n\n')
+    print(f'\n\noptimal_solution: {optimal_solution}\n')
 
-    print(f'optimal_value: {optimal_values}\n\n')
+    print(f'optimal_value: {optimal_values}\n')
 
-    print(f'shadow_prices: {shadow_prices}')
+    print(f'shadow_prices: {shadow_prices}\n')
+
+    print(f'tableau: {tableau}')
+    print(type(tableau[2,3]))
 
     results = {
         "profit": optimal_solution,
         "optimal_values": optimal_values,
-        "shadow_prices": shadow_prices
+        "shadow_prices": shadow_prices,
+        "tableau": tableau
     }
 
     return render_template('success.html', results=results)

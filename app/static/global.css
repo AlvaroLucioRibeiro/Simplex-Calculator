@@ -200,9 +200,36 @@ select{
     font-size: 2.5em;
 }
 
-#result-lucro{
 
+#tableau-final:hover{
+    background-color: rgb(66, 66, 66);
 }
+#tableau-final{
+    border-radius: 10px;
+}
+
+.minimal-table {
+    width: 100%;
+    font-family: sans-serif;
+    border: 1px solid #ddd;
+}
+  
+.cell {
+    padding: 5px 10px;
+    border-bottom: 1px solid #ddd;
+    text-align: left;
+}
+  
+.cell-container {
+    display: flex;
+    align-items: center;
+}
+  
+.minimal-table th,
+.minimal-table td {
+    border: none;
+}
+
 
 .results{
     font-size: 120%;

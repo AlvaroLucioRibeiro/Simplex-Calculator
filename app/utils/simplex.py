@@ -148,4 +148,4 @@ class Simplex():
             shadow_prices[f"x{i+1}"] = shadow_prices_values[i]
         
         
-        return optimal_profit, optimal_values, shadow_prices
+        return optimal_profit, optimal_values, shadow_prices, self.tableau

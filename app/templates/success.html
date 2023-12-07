@@ -18,7 +18,21 @@
                 {% for key, value in results.shadow_prices.items() %}
                     <li class="results" id="shadow-price-result">Preço-Sombra da Restrição {{ key }}: R${{ value }}</li>
                 {% endfor %}
-            </ul>    
+            </ul>
+            <h3 id="result-lucro">Tableau Final:</h3> 
+            <table id="tableau-final" class="minimal-table">
+                {% for row in results.tableau %}
+                  <tr id="tableau-row">
+                    {% for item in row %}
+                      <td class="cell">
+                        <div class="cell-container">
+                          {{ item }}
+                        </div>
+                      </td>
+                    {% endfor %}
+                  </tr>
+                {% endfor %}
+            </table>
         </div>
     </main>
 {% endblock %}
