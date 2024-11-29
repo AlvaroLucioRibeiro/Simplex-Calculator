@@ -1,3 +1,6 @@
+![Python](https://img.shields.io/badge/language-Python-yellow)
+![License: MIT](https://img.shields.io/badge/License-MIT-orange.svg)
+
 # simplex-calculator
 Simplex Calculator using Python
 
